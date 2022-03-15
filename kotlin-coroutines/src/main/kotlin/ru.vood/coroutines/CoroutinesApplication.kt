@@ -1,4 +1,4 @@
-package ru.vood.githubdowload
+package ru.vood.coroutines
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -8,8 +8,8 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @SpringBootApplication
 @EnableScheduling
 @EnableConfigurationProperties
-class GithubDownloadApplication
+class CoroutinesApplication
 
 fun main(args: Array<String>) {
-    runApplication<GithubDownloadApplication>(*args)
+    runApplication<CoroutinesApplication>(*args)
 }
