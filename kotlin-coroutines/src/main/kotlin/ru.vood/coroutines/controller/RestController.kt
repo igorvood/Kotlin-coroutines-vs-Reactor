@@ -11,7 +11,7 @@ class RestController(
     val requestService2: RequestService2
 ) {
 
-    @GetMapping("/{id}")
+    @GetMapping("classic/{id}")
 //    @GetMapping("/collectInfo")
     fun collectInfo(@PathVariable id: Int): DataCollector {
         val runBlocking = runBlocking {

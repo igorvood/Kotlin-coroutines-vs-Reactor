@@ -19,7 +19,7 @@ class HttpSimulation extends Simulation {
 
   setUp(
     scn
-      .inject(constantUsersPerSec(1000) during (20 seconds))
+      .inject(constantUsersPerSec(10) during (2 seconds))
       .protocols(httpBuilder))
 
 

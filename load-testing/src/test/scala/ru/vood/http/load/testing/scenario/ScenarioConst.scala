@@ -8,7 +8,7 @@ import io.gatling.http.request.builder.HttpRequestBuilder
 object ScenarioConst {
 
   val coroutinesGetScenario: HttpRequestBuilder = http("coroutinesGet")
-    .get("1")
+    .get("classic/1")
     .check(status is 200)
 
 
