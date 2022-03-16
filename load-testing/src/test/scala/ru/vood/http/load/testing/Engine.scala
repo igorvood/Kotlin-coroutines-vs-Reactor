@@ -9,6 +9,7 @@ object Engine extends App {
     .resourcesDirectory(IDEPathHelper.mavenResourcesDirectory.toString)
     .resultsDirectory(IDEPathHelper.resultsDirectory.toString)
     .binariesDirectory(IDEPathHelper.mavenBinariesDirectory.toString)
+    .simulationClass("ru.vood.http.load.testing.simulation.HttpSimulation")
 
   Gatling.fromMap(props.build)
 }

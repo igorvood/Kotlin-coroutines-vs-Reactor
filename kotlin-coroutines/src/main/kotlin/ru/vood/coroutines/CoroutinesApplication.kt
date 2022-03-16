@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @SpringBootApplication
 @EnableScheduling
 @EnableConfigurationProperties
+//@EnableSwagger2WebMvc
 class CoroutinesApplication
 
 fun main(args: Array<String>) {

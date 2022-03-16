@@ -1,1 +1,6 @@
 delay: 100
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
