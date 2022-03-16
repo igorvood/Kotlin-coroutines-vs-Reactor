@@ -1,6 +1,5 @@
 package ru.vood.coroutines.experemental
 
-import org.springframework.http.server.reactive.ServerHttpResponse
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
@@ -22,7 +21,10 @@ class UserController(
 //        response: ServerHttpResponse
     ): Response = logRequest {
 
-        DataCollector(requestService1.getData(userId.toString()), requestService2.getData(userId.toString()))
+        DataCollector(
+            requestService1.getData(userId.toString()).await(),
+            requestService2.getData(userId.toString()).await()
+        )
         /*val user = users[userId] ?: run {
             response.statusCode = HttpStatus.NOT_FOUND
             return@logRequest NotFoundResponse(
