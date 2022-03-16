@@ -1,4 +1,4 @@
-package ru.vood.coroutines.controller
+package ru.vood.coroutines.request
 
 import kotlinx.coroutines.delay
 import org.springframework.beans.factory.annotation.Value
