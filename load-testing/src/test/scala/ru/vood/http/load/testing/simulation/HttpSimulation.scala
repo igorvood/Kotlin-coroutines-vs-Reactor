@@ -8,53 +8,56 @@ import io.gatling.http.protocol.HttpProtocolBuilder
 import ru.vood.http.load.testing.scenario.ScenarioConst.{classicRestScenario, coroutinesGetScenario}
 
 import scala.concurrent.duration.DurationInt
+import scala.language.postfixOps
 
 class HttpSimulation extends Simulation {
 
-  private val httpBuilder: HttpProtocolBuilder = http.baseUrl("http://localhost:8080/")
+  private val httpBuilderClassic: HttpProtocolBuilder = http.baseUrl("http://localhost:8090/")
+  private val httpBuilderCoroutine: HttpProtocolBuilder = http.baseUrl("http://localhost:8000/")
 
 
   private val scn: ScenarioBuilder = scenario("classicRestScenario")
     .exec(classicRestScenario)
-    .exec(pause(10))
+//    .exec(pause(10))
 
-  private val coroutinesGetScenarioBuilder: ScenarioBuilder = scenario("coroutinesGetScenario").exec(coroutinesGetScenario).exec(pause(10))
+  private val coroutinesGetScenarioBuilder: ScenarioBuilder = scenario("coroutinesGetScenario").exec(coroutinesGetScenario)
+//    .exec(pause(10))
 
-  private val usersCnt = 500
-  private val seconds = 200
-    setUp(
-//      scn
-//        .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
-//        .protocols(httpBuilder),
+  private val usersCnt = 140
+  private val seconds = 300
+   /* setUp(
+      scn
+        .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
+        .protocols(httpBuilderClassic),
       coroutinesGetScenarioBuilder
         .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
-        .protocols(httpBuilder)
+        .protocols(httpBuilderCoroutine)
     )
 
 
- /* setUp(
+  setUp(
     scn
       .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
-      .protocols(httpBuilder)
+      .protocols(httpBuilderClassic)
       .andThen(
       coroutinesGetScenarioBuilder
         .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
-        .protocols(httpBuilder)
+        .protocols(httpBuilderCoroutine)
     )
   )*/
 
 
- /* setUp(
+  setUp(
     coroutinesGetScenarioBuilder
       .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
-      .protocols(httpBuilder)
+      .protocols(httpBuilderCoroutine)
 
       .andThen(
         scn
           .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
-          .protocols(httpBuilder)
+          .protocols(httpBuilderClassic)
       )
-  )*/
+  )
 
 
 }
