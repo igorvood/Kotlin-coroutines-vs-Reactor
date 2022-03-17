@@ -1,5 +1,6 @@
 package ru.vood.coroutines.experemental
 
+import org.springframework.scheduling.annotation.Async
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
@@ -15,6 +16,7 @@ class UserController(
 
 ) : ILogging by LoggingImp<UserController>("service-user") {
 
+    @Async
     @GetMapping(value = ["coroutine/{id}"])
     suspend fun info(
         @PathVariable("id") userId: Int,
