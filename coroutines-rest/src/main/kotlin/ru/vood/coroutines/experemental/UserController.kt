@@ -21,9 +21,11 @@ class UserController(
 //        response: ServerHttpResponse
     ): Response = logRequest {
 
+        val data = requestService1.getData(userId.toString())
+        val data1 = requestService2.getData(userId.toString())
         DataCollector(
-            requestService1.getData(userId.toString()).await(),
-            requestService2.getData(userId.toString()).await()
+            data.await(),
+            data1.await()
         )
         /*val user = users[userId] ?: run {
             response.statusCode = HttpStatus.NOT_FOUND
