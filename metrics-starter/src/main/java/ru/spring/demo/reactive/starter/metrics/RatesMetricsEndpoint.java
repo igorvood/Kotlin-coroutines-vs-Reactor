@@ -28,13 +28,13 @@ public class RatesMetricsEndpoint {
             Entry::getKey,
             Entry::getValue,
             (o, o2) -> {
-                if(o instanceof List && o2 instanceof List) {
+                if (o instanceof List && o2 instanceof List) {
                     ((List) o).addAll((Collection) o2);
                 }
                 return o;
             }
     );
-    private final        MetricRegistry                                           metricRegistry;
+    private final MetricRegistry metricRegistry;
 
     @ReadOperation
     public Map<String, Object> allrates() {
@@ -82,9 +82,9 @@ public class RatesMetricsEndpoint {
 
     private Map<String, Object> extractThreadPoolStats(String name, ThreadPoolExecutor threadPoolExecutor) {
         int remainingCapacity = threadPoolExecutor.getQueue().remainingCapacity();
-        int queueSize         = threadPoolExecutor.getQueue().size() + remainingCapacity;
-        int threadInWork      = threadPoolExecutor.getActiveCount();
-        int maximumPoolSize   = threadPoolExecutor.getMaximumPoolSize();
+        int queueSize = threadPoolExecutor.getQueue().size() + remainingCapacity;
+        int threadInWork = threadPoolExecutor.getActiveCount();
+        int maximumPoolSize = threadPoolExecutor.getMaximumPoolSize();
 
         return new ImmutableMap.Builder<String, Object>()
                 .put("buffers", Arrays.asList(

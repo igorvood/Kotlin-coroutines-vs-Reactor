@@ -10,14 +10,14 @@ import ru.vood.coroutines.request.RequestService1
 import ru.vood.coroutines.request.RequestService2
 
 @RestController
-class RestController(
+open class RestController(
     val requestService1: RequestService1,
     val requestService2: RequestService2
 ) {
 
-    @Async
+    @Async("restProcessorExecutor")
     @GetMapping("classic/{id}")
-//    @GetMapping("/collectInfo")
+    open//    @GetMapping("/collectInfo")
     fun collectInfo(@PathVariable id: Int): DataCollector {
         val runBlocking = runBlocking {
 

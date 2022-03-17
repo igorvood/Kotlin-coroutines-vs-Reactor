@@ -18,45 +18,60 @@ class HttpSimulation extends Simulation {
 
   private val scn: ScenarioBuilder = scenario("classicRestScenario")
     .exec(classicRestScenario)
-//    .exec(pause(10))
+  //    .exec(pause(10))
 
   private val coroutinesGetScenarioBuilder: ScenarioBuilder = scenario("coroutinesGetScenario").exec(coroutinesGetScenario)
-//    .exec(pause(10))
+  //    .exec(pause(10))
 
-  private val usersCnt = 200
-  private val seconds = 3
-   /* setUp(
-      scn
-        .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
-        .protocols(httpBuilderClassic),
-      coroutinesGetScenarioBuilder
-        .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
-        .protocols(httpBuilderCoroutine)
-    )
+  private val usersCnt = 100
+  private val seconds = 10
+  /* setUp(
+     scn
+       .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
+       .protocols(httpBuilderClassic),
+     coroutinesGetScenarioBuilder
+       .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
+       .protocols(httpBuilderCoroutine)
+   )
+
+
+ setUp(
+   scn
+     .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
+     .protocols(httpBuilderClassic)
+     .andThen(
+     coroutinesGetScenarioBuilder
+       .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
+       .protocols(httpBuilderCoroutine)
+   )
+ )*/
 
 
   setUp(
-    scn
-      .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
-      .protocols(httpBuilderClassic)
-      .andThen(
-      coroutinesGetScenarioBuilder
-        .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
-        .protocols(httpBuilderCoroutine)
-    )
-  )*/
-
-
-  setUp(
-    coroutinesGetScenarioBuilder
+    /*coroutinesGetScenarioBuilder
       .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
       .protocols(httpBuilderCoroutine)
 
-      .andThen(
-        scn
-          .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
-          .protocols(httpBuilderClassic)
+      .andThen(*/
+    scn
+      .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
+      .throttle(
+        reachRps(usersCnt*2) in (10 seconds),
+        holdFor(10 seconds),
+//        holdFor(1 minutes),
+        reachRps(usersCnt*3) in (10 seconds),
+        holdFor(10 seconds),
+        reachRps(usersCnt*4) in (10 seconds),
+        holdFor(10 seconds),
+        reachRps(usersCnt*5) in (10 seconds),
+        holdFor(10 seconds),
+        reachRps(usersCnt*6) in (10 seconds),
+        holdFor(10 seconds),
+        reachRps(usersCnt*7) in (10 seconds),
+        holdFor(10 seconds),
       )
+      .protocols(httpBuilderClassic)
+    //      )
   )
 
 

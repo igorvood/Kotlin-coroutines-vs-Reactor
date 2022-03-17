@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @EnableConfigurationProperties
 //@EnableSwagger2WebMvc
 @EnableAsync
-class ClassicRestApplication
+open class ClassicRestApplication
 
 fun main(args: Array<String>) {
     runApplication<ClassicRestApplication>(*args)
