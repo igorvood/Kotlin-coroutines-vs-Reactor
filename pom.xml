@@ -7,6 +7,7 @@
         <module>kotlin-coroutines</module>
         <module>load-testing</module>
         <module>coroutines-rest</module>
+        <module>webflux</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

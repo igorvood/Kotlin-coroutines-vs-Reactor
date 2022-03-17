@@ -1,13 +1,13 @@
-package ru.vood.coroutines.controller
+package ru.vood.webflux.controller
 
 import kotlinx.coroutines.runBlocking
-import org.springframework.scheduling.annotation.Async
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
-import ru.vood.coroutines.request.DataCollector
-import ru.vood.coroutines.request.RequestService1
-import ru.vood.coroutines.request.RequestService2
+import reactor.core.publisher.Mono
+import ru.vood.webflux.request.DataCollector
+import ru.vood.webflux.request.RequestService1
+import ru.vood.webflux.request.RequestService2
 
 @RestController
 class RestController(
@@ -15,10 +15,9 @@ class RestController(
     val requestService2: RequestService2
 ) {
 
-    @Async
     @GetMapping("classic/{id}")
 //    @GetMapping("/collectInfo")
-    fun collectInfo(@PathVariable id: Int): DataCollector {
+    fun collectInfo(@PathVariable id: Int): Mono<DataCollector> {
         val runBlocking = runBlocking {
 
 //            val id = 2
@@ -26,7 +25,8 @@ class RestController(
             val data1 = requestService2.getData(id.toString())
             DataCollector(data.await(), data1.await())
         }
-        return runBlocking
+        TODO()
+//        return Mono.create(runBlocking)
     }
 
 }
