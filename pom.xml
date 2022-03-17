@@ -8,6 +8,7 @@
         <module>load-testing</module>
         <module>coroutines-rest</module>
         <module>webflux</module>
+        <module>metrics-starter</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
