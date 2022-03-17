@@ -113,9 +113,9 @@
                     <args>
                         <arg>-Xjsr305=strict</arg>
                     </args>
-                    <compilerPlugins>
+                    <!--<compilerPlugins>
                         <plugin>spring</plugin>
-                    </compilerPlugins>
+                    </compilerPlugins>-->
                 </configuration>
                 <!-- <dependencies>
                      <dependency>
