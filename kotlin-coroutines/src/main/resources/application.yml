@@ -1,5 +1,6 @@
 delay: 100
-requestService1:
+RequestService1: "localhost:8001"
+RequestService2: "localhost:8002"
 
 management:
   endpoints:
