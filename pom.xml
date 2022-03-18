@@ -9,6 +9,8 @@
         <module>coroutines-rest</module>
         <module>webflux</module>
         <module>metrics-starter</module>
+        <module>external-service</module>
+        <module>external-service-second</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
