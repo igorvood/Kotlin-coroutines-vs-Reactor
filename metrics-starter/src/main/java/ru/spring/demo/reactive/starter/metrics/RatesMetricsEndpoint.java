@@ -24,17 +24,9 @@ import static java.util.stream.Collectors.toMap;
 @Endpoint(id = "rates")
 @RequiredArgsConstructor
 public class RatesMetricsEndpoint {
-    private static final Collector<Entry<String, Object>, ?, Map<String, Object>> ENTRY_MAP_COLLECTOR = toMap(
-            Entry::getKey,
-            Entry::getValue,
-            (o, o2) -> {
-                if (o instanceof List && o2 instanceof List) {
-                    ((List) o).addAll((Collection) o2);
-                }
-                return o;
-            }
-    );
     private final MetricRegistry metricRegistry;
+    private final Optional<Map<String, ThreadPoolExecutor>> executors;
+
 
     @ReadOperation
     public Map<String, Object> allrates() {
@@ -111,5 +103,17 @@ public class RatesMetricsEndpoint {
         int workersCount;
     }
 
-    private final Optional<Map<String, ThreadPoolExecutor>> executors;
+
+    private static final Collector<Entry<String, Object>, ?, Map<String, Object>> ENTRY_MAP_COLLECTOR = toMap(
+            Entry::getKey,
+            Entry::getValue,
+            (o, o2) -> {
+                if (o instanceof List && o2 instanceof List) {
+                    ((List) o).addAll((Collection) o2);
+                }
+                return o;
+            }
+    );
+
+
 }

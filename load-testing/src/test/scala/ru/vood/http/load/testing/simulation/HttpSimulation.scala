@@ -24,7 +24,7 @@ class HttpSimulation extends Simulation {
   //    .exec(pause(10))
 
   private val usersCnt = 300
-  private val seconds = 30
+  private val seconds = 300
   /* setUp(
      scn
        .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
