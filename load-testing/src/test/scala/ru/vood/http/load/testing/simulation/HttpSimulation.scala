@@ -23,9 +23,9 @@ class HttpSimulation extends Simulation {
   private val coroutinesGetScenarioBuilder: ScenarioBuilder = scenario("coroutinesGetScenario").exec(coroutinesGetScenario)
   //    .exec(pause(10))
 
-  private val usersCnt = 300
-  private val seconds = 10
-  /* setUp(
+  private val usersCnt = 150
+  private val seconds = 3
+   setUp(
      scn
        .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
        .protocols(httpBuilderClassic),
@@ -33,7 +33,7 @@ class HttpSimulation extends Simulation {
        .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
        .protocols(httpBuilderCoroutine)
    )
-
+/*
 
  setUp(
    scn
@@ -47,7 +47,7 @@ class HttpSimulation extends Simulation {
  )*/
 
 
-  setUp(
+ /* setUp(
     /*coroutinesGetScenarioBuilder
       .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
       .protocols(httpBuilderCoroutine)
@@ -73,6 +73,6 @@ class HttpSimulation extends Simulation {
       .protocols(httpBuilderClassic)
     //      )
   )
-
+*/
 
 }

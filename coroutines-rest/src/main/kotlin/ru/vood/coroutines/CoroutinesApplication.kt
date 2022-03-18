@@ -7,11 +7,11 @@ import org.springframework.scheduling.annotation.EnableAsync
 import org.springframework.scheduling.annotation.EnableScheduling
 
 @SpringBootApplication
-@EnableScheduling
+//@EnableScheduling
 @EnableConfigurationProperties
 //@EnableSwagger2WebMvc
 @EnableAsync
-class CoroutinesApplication
+open class CoroutinesApplication
 
 fun main(args: Array<String>) {
     runApplication<CoroutinesApplication>(*args)

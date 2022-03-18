@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger
 open class RestController(
     val requestService1: RequestService1,
     val requestService2: RequestService2,
-    val meterRegistry: MeterRegistry,
+    private val meterRegistry: MeterRegistry,
 ) {
 
     private val map: ConcurrentHashMap<Int, Int> = ConcurrentHashMap()
@@ -25,7 +25,7 @@ open class RestController(
 
     private val counter = meterRegistry.counter("letter.rps")
 
-    @Async("restProcessorExecutor")
+//    @Async("restProcessorExecutor")
     @GetMapping("classic/{id}")
     open//    @GetMapping("/collectInfo")
     fun collectInfo(@PathVariable id: Int): DataCollector {

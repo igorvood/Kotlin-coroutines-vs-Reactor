@@ -1,18 +1,30 @@
 package ru.vood.coroutines.request
 
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import ru.vood.coroutines.constObj.Scope
+import org.springframework.web.client.RestTemplate
+import ru.vood.coroutines.constObj.Scope.crScope
 
 @Service
-class RequestService2 {
+class RequestService2(
+    private val restTemplate: RestTemplate
+) {
+
     @Value("\${delay}")
     var delayV: Long = 10
 
-    suspend fun getData(id: String) = Scope.crScope.async {
-        delay(delayV)
-        "$id ${RequestService2::class.java}"
-    }
+    @Value("\${RequestService2}")
+    var hostPort = "localhost:8002"
+
+    suspend fun getDataAsync(id: String): Deferred<String> =
+        crScope.async {
+            val forEntity = restTemplate.getForEntity(
+                "http://$hostPort/externalFirstService/$id",
+                String::class.java
+            ).body!!
+            "$id $forEntity"
+
+        }
 }
