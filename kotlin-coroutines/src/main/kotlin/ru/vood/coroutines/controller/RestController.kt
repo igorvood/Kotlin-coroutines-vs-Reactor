@@ -44,8 +44,8 @@ open class RestController(
 
 
 //            val id = 2
-            val data = requestService1.getData(id.toString())
-            val data1 = requestService2.getData(id.toString())
+            val data = requestService1.getDataAsync(id.toString())
+            val data1 = requestService2.getDataAsync(id.toString())
             DataCollector(data.await(), data1.await())
         }
         return runBlocking
