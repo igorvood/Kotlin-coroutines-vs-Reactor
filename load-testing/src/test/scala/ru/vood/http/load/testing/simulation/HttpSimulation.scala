@@ -5,7 +5,7 @@ import io.gatling.core.scenario.Simulation
 import io.gatling.core.structure.ScenarioBuilder
 import io.gatling.http.Predef.http
 import io.gatling.http.protocol.HttpProtocolBuilder
-import ru.vood.http.load.testing.scenario.ScenarioConst.{classicRestScenario, coroutinesGetScenario}
+import ru.vood.http.load.testing.scenario.ScenarioConst.{classicRestScenario, coroutinesGetScenario, notMyGetScenario}
 
 import scala.concurrent.duration.DurationInt
 import scala.language.postfixOps
@@ -15,11 +15,16 @@ class HttpSimulation extends Simulation {
   private val httpBuilderClassic: HttpProtocolBuilder = http.baseUrl("http://localhost:8090/")
   private val httpBuilderCoroutine: HttpProtocolBuilder = http.baseUrl("http://localhost:8000/")
 
+  private val httpNotMy: HttpProtocolBuilder = http.baseUrl("http://localhost:7000/")
+
+
   private val scn: ScenarioBuilder = scenario("classicRestScenario")
     .exec(classicRestScenario)
   //    .exec(pause(10))
 
   private val coroutinesGetScenarioBuilder: ScenarioBuilder = scenario("coroutinesGetScenario").exec(coroutinesGetScenario)
+
+  private val notMyGetScenarioGetScenarioBuilder: ScenarioBuilder = scenario("notMyGetScenario").exec(notMyGetScenario)
   //    .exec(pause(10))
 
   private val usersCnt = 300
@@ -45,6 +50,8 @@ class HttpSimulation extends Simulation {
        .protocols(httpBuilderCoroutine)
    )
  )*/
+
+
 
 
   setUp(
@@ -85,4 +92,7 @@ class HttpSimulation extends Simulation {
   )
 */
 
+
+ /* setUp(notMyGetScenarioGetScenarioBuilder.inject(rampUsersPerSec(100).to(usersCnt).during(minute.minutes)))
+    .protocols(httpNotMy)*/
 }

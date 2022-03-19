@@ -22,7 +22,11 @@ object ScenarioConst {
 //    .check(jsonPath("$.data2") notExists)
     .check(status is 200)
 
+  val notMyGetScenario: HttpRequestBuilder = http("notMyGetScenario")
+    .get("1")
 
+    .check(jsonPath("$.surname") exists)
+    .check(status is 200)
 
 
 }
