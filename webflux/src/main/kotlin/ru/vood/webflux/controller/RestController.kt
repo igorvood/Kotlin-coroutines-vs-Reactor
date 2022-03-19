@@ -22,7 +22,8 @@ class RestController(
             .flatMap { q1 ->
                 requestService2.getDataAsync(id)
                     .map { q2 -> q1 to q2 }
-            }.map { DataCollector(it.first, it.second) }
+            }
+            .map { DataCollector(it.first, it.second) }
         return dataAsync
     }
 
