@@ -5,7 +5,7 @@ import io.gatling.core.scenario.Simulation
 import io.gatling.core.structure.ScenarioBuilder
 import io.gatling.http.Predef.http
 import io.gatling.http.protocol.HttpProtocolBuilder
-import ru.vood.http.load.testing.scenario.ScenarioConst.{classicRestScenario, coroutinesGetScenario, notMyGetScenario}
+import ru.vood.http.load.testing.scenario.ScenarioConst.{classicRestScenario, coroutinesGetScenario, notMyGetScenario, webFluxScenarioData}
 
 import scala.concurrent.duration.DurationInt
 import scala.language.postfixOps
@@ -20,79 +20,84 @@ class HttpSimulation extends Simulation {
 
   private val scn: ScenarioBuilder = scenario("classicRestScenario")
     .exec(classicRestScenario)
-  //    .exec(pause(10))
 
   private val coroutinesGetScenarioBuilder: ScenarioBuilder = scenario("coroutinesGetScenario").exec(coroutinesGetScenario)
 
   private val notMyGetScenarioGetScenarioBuilder: ScenarioBuilder = scenario("notMyGetScenario").exec(notMyGetScenario)
   //    .exec(pause(10))
 
-  private val usersCnt = 300
+  private val usersCnt = 400
   private val seconds = 3
 
   private val minute = 2
-   /*setUp(
-     scn
-       .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
-       .protocols(httpBuilderClassic),
-     coroutinesGetScenarioBuilder
-       .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
-       .protocols(httpBuilderCoroutine)
-   )*/
 
- /*setUp(
-   scn
-     .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
-     .protocols(httpBuilderClassic)
-     .andThen(
-     coroutinesGetScenarioBuilder
-       .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
-       .protocols(httpBuilderCoroutine)
-   )
- )*/
+  setUp(webFluxScenarioData.scenarioBuilder
+    .inject(rampUsersPerSec(200).to(usersCnt).during(minute.minutes),
+      constantUsersPerSec(usersCnt) during (minute minutes)
+    )
 
-
-
-
-  setUp(
-    scn
-      .inject(rampUsersPerSec(100).to(usersCnt).during(minute.minutes))
-      .protocols(httpBuilderClassic)
-      .andThen(
-        coroutinesGetScenarioBuilder
-          .inject(rampUsersPerSec(100).to(usersCnt).during(minute.minutes))
-          .protocols(httpBuilderCoroutine)
-      )
+    .protocols(webFluxScenarioData.protocol)
   )
- /* setUp(
-    /*coroutinesGetScenarioBuilder
+  /*setUp(
+    scn
+      .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
+      .protocols(httpBuilderClassic),
+    coroutinesGetScenarioBuilder
       .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
       .protocols(httpBuilderCoroutine)
+  )*/
 
-      .andThen(*/
+  /*setUp(
     scn
       .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
-   /*   .throttle(
-        reachRps(usersCnt*2) in (10 seconds),
-        holdFor(10 seconds),
-//        holdFor(1 minutes),
-        reachRps(usersCnt*3) in (10 seconds),
-        holdFor(10 seconds),
-        reachRps(usersCnt*4) in (10 seconds),
-        holdFor(10 seconds),
-        reachRps(usersCnt*5) in (10 seconds),
-        holdFor(10 seconds),
-        reachRps(usersCnt*6) in (10 seconds),
-        holdFor(10 seconds),
-        reachRps(usersCnt*7) in (10 seconds),
-        holdFor(10 seconds),
-      )*/
       .protocols(httpBuilderClassic)
-    //      )
-  )
-*/
+      .andThen(
+      coroutinesGetScenarioBuilder
+        .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
+        .protocols(httpBuilderCoroutine)
+    )
+  )*/
 
 
- /* setUp(notMyGetScenarioGetScenarioBuilder.inject(rampUsersPerSec(100).to(usersCnt).during(minute.minutes)))
-    .protocols(httpNotMy)*/
+  /* setUp(
+     scn
+       .inject(rampUsersPerSec(100).to(usersCnt).during(minute.minutes))
+       .protocols(httpBuilderClassic)
+       .andThen(
+         coroutinesGetScenarioBuilder
+           .inject(rampUsersPerSec(100).to(usersCnt).during(minute.minutes))
+           .protocols(httpBuilderCoroutine)
+       )
+   )*/
+  /* setUp(
+     /*coroutinesGetScenarioBuilder
+       .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
+       .protocols(httpBuilderCoroutine)
+
+       .andThen(*/
+     scn
+       .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
+    /*   .throttle(
+         reachRps(usersCnt*2) in (10 seconds),
+         holdFor(10 seconds),
+ //        holdFor(1 minutes),
+         reachRps(usersCnt*3) in (10 seconds),
+         holdFor(10 seconds),
+         reachRps(usersCnt*4) in (10 seconds),
+         holdFor(10 seconds),
+         reachRps(usersCnt*5) in (10 seconds),
+         holdFor(10 seconds),
+         reachRps(usersCnt*6) in (10 seconds),
+         holdFor(10 seconds),
+         reachRps(usersCnt*7) in (10 seconds),
+         holdFor(10 seconds),
+       )*/
+       .protocols(httpBuilderClassic)
+     //      )
+   )
+ */
+
+
+  /* setUp(notMyGetScenarioGetScenarioBuilder.inject(rampUsersPerSec(100).to(usersCnt).during(minute.minutes)))
+     .protocols(httpNotMy)*/
 }
