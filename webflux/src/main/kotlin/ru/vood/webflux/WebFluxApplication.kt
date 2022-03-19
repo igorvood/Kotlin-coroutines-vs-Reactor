@@ -6,10 +6,9 @@ import org.springframework.boot.runApplication
 import org.springframework.scheduling.annotation.EnableScheduling
 
 @SpringBootApplication
-@EnableScheduling
+//@EnableScheduling
 @EnableConfigurationProperties
-//@EnableSwagger2WebMvc
-class ClassicRestApplication
+open class ClassicRestApplication
 
 fun main(args: Array<String>) {
     runApplication<ClassicRestApplication>(*args)

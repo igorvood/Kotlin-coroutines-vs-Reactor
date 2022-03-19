@@ -1,17 +1,20 @@
 package ru.vood.webflux.request
 
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
+import org.springframework.web.reactive.function.client.WebClient
+import reactor.core.publisher.Mono
 
 @Service
-class RequestService2 {
-    @Value("\${delay}")
-    var delayV: Long = 10
+class RequestService2(
+    @Qualifier("externalSecondService") private val restTemplate: WebClient
+) {
 
-    suspend fun getData(id: String) = Scope.crScope.async {
-        delay(delayV)
-        "$id ${RequestService2::class.java}"
+    fun getDataAsync(id: String): Mono<String> {
+        val accept = restTemplate.get().uri("/{id}", id)
+            .retrieve()
+            .bodyToMono(String::class.java)
+        return accept
     }
 }
