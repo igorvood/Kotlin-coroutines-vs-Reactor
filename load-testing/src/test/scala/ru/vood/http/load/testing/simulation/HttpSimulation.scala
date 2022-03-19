@@ -24,6 +24,8 @@ class HttpSimulation extends Simulation {
 
   private val usersCnt = 300
   private val seconds = 3
+
+  private val minute = 2
    /*setUp(
      scn
        .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
@@ -47,11 +49,11 @@ class HttpSimulation extends Simulation {
 
   setUp(
     scn
-      .inject(rampUsersPerSec(100).to(usersCnt).during(1.minutes))
+      .inject(rampUsersPerSec(100).to(usersCnt).during(minute.minutes))
       .protocols(httpBuilderClassic)
       .andThen(
         coroutinesGetScenarioBuilder
-          .inject(rampUsersPerSec(100).to(usersCnt).during(1.minutes))
+          .inject(rampUsersPerSec(100).to(usersCnt).during(minute.minutes))
           .protocols(httpBuilderCoroutine)
       )
   )

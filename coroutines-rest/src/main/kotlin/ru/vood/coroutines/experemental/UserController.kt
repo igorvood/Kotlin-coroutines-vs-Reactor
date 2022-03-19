@@ -1,6 +1,7 @@
 package ru.vood.coroutines.experemental
 
 import io.micrometer.core.instrument.MeterRegistry
+import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
@@ -20,7 +21,7 @@ open class UserController(
     private val counter = meterRegistry.counter("letter.rps")
 
 //    @Async
-    @GetMapping(value = ["coroutine/{id}"])
+    @GetMapping(value = ["coroutine/{id}"]/*, consumes = [MediaType.APPLICATION_NDJSON_VALUE]*/)
     open suspend fun info(
     @PathVariable("id") id: String,
 //        response: ServerHttpResponse

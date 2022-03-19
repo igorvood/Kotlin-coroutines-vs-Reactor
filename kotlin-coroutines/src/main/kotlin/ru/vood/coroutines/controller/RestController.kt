@@ -2,9 +2,11 @@ package ru.vood.coroutines.controller
 
 import io.micrometer.core.instrument.MeterRegistry
 import kotlinx.coroutines.runBlocking
+import org.springframework.http.MediaType
 import org.springframework.scheduling.annotation.Async
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.vood.coroutines.request.DataCollector
 import ru.vood.coroutines.request.RequestService1
@@ -26,7 +28,8 @@ open class RestController(
     private val counter = meterRegistry.counter("letter.rps")
 
 //    @Async("restProcessorExecutor")
-    @GetMapping("classic/{id}")
+//    @PostMapping
+    @GetMapping("classic/{id}"/*, consumes = [MediaType.APPLICATION_NDJSON_VALUE]*/)
     open//    @GetMapping("/collectInfo")
     fun collectInfo(@PathVariable id: String): DataCollector {
             val data = requestService1.getDataAsync(id.toString())
