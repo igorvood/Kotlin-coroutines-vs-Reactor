@@ -7,7 +7,7 @@ import io.gatling.http.request.builder.HttpRequestBuilder
 
 object ScenarioConst {
 
-  private val webFluxRestScenario: HttpRequestBuilder = http("classicRestScenario")
+  private val webFluxRestScenario: HttpRequestBuilder = http("webFluxRestScenario")
     .get("webfluf/1")
     .check(jsonPath("$.data1") exists)
     .check(jsonPath("$.data2") exists)
@@ -34,13 +34,18 @@ object ScenarioConst {
     http.baseUrl("http://localhost:8090/"))
   //  ----------------------------------------------------------
 
-  val coroutinesGetScenario: HttpRequestBuilder = http("coroutinesGetScenario")
+  private  val coroutinesGetScenario: HttpRequestBuilder = http("coroutinesGetScenario")
     .get("coroutine/1")
 
     .check(jsonPath("$.data1") exists)
     .check(jsonPath("$.data2") exists)
     //    .check(jsonPath("$.data2") notExists)
     .check(status is 200)
+
+  val coroutinesRestScenarioData: OneScenarioData = OneScenarioData(
+    scenario("coroutinesGetScenario")
+      .exec(coroutinesGetScenario),
+    http.baseUrl("http://localhost:8000/"))
 
   //  ----------------------------------------------------------
 
