@@ -15,7 +15,6 @@ class HttpSimulation extends Simulation {
   private val httpBuilderClassic: HttpProtocolBuilder = http.baseUrl("http://localhost:8090/")
   private val httpBuilderCoroutine: HttpProtocolBuilder = http.baseUrl("http://localhost:8000/")
 
-
   private val scn: ScenarioBuilder = scenario("classicRestScenario")
     .exec(classicRestScenario)
   //    .exec(pause(10))
@@ -23,19 +22,18 @@ class HttpSimulation extends Simulation {
   private val coroutinesGetScenarioBuilder: ScenarioBuilder = scenario("coroutinesGetScenario").exec(coroutinesGetScenario)
   //    .exec(pause(10))
 
-  private val usersCnt = 150
+  private val usersCnt = 300
   private val seconds = 3
-   setUp(
+   /*setUp(
      scn
        .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
        .protocols(httpBuilderClassic),
      coroutinesGetScenarioBuilder
        .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
        .protocols(httpBuilderCoroutine)
-   )
-/*
+   )*/
 
- setUp(
+ /*setUp(
    scn
      .inject(constantUsersPerSec(usersCnt) during (seconds seconds))
      .protocols(httpBuilderClassic)
@@ -47,6 +45,16 @@ class HttpSimulation extends Simulation {
  )*/
 
 
+  setUp(
+    scn
+      .inject(rampUsersPerSec(100).to(usersCnt).during(1.minutes))
+      .protocols(httpBuilderClassic)
+      .andThen(
+        coroutinesGetScenarioBuilder
+          .inject(rampUsersPerSec(100).to(usersCnt).during(1.minutes))
+          .protocols(httpBuilderCoroutine)
+      )
+  )
  /* setUp(
     /*coroutinesGetScenarioBuilder
       .inject(constantUsersPerSec(usersCnt) during (seconds seconds))

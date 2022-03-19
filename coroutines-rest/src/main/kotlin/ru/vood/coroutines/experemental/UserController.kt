@@ -1,7 +1,6 @@
 package ru.vood.coroutines.experemental
 
 import io.micrometer.core.instrument.MeterRegistry
-import org.springframework.scheduling.annotation.Async
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
@@ -23,12 +22,12 @@ open class UserController(
 //    @Async
     @GetMapping(value = ["coroutine/{id}"])
     open suspend fun info(
-        @PathVariable("id") userId: String,
+    @PathVariable("id") id: String,
 //        response: ServerHttpResponse
     ): Response = logRequest {
 
-        val data = requestService1.getDataAsync(userId)
-        val data1 = requestService2.getDataAsync(userId)
+        val data = requestService1.getDataAsync(id)
+        val data1 = requestService2.getDataAsync(id)
         counter.increment()
         DataCollector(
             data.await(),

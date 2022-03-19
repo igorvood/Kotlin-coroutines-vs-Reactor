@@ -18,13 +18,13 @@ class RequestService2(
     @Value("\${RequestService2}")
     var hostPort = "localhost:8002"
 
-    suspend fun getDataAsync(id: String): Deferred<String> =
-        crScope.async {
+    fun getDataAsync(id: String): String
+ {
             val forEntity = restTemplate.getForEntity(
                 "http://$hostPort/externalFirstService/$id",
                 String::class.java
             ).body!!
-            "$id $forEntity"
+            return "$id $forEntity"
 
         }
 }

@@ -29,26 +29,11 @@ open class RestController(
     @GetMapping("classic/{id}")
     open//    @GetMapping("/collectInfo")
     fun collectInfo(@PathVariable id: Int): DataCollector {
-        val runBlocking = runBlocking {
-            counter.increment()
-
-            val now = LocalDateTime.now().second
-            synchronized(this) {
-                if (prevKey.get() != now && map.size == 3) {
-                    map.remove(prevKey.get())
-                    prevKey.set(now)
-                }
-                val computeIfAbsent = map.computeIfAbsent(now) { 0 }.plus(1)
-                map.put(now, computeIfAbsent + 1)
-            }
-
-
-//            val id = 2
             val data = requestService1.getDataAsync(id.toString())
             val data1 = requestService2.getDataAsync(id.toString())
-            DataCollector(data.await(), data1.await())
-        }
-        return runBlocking
+            DataCollector(data, data1)
+
+        return DataCollector(data, data1)
     }
 
     @GetMapping("classic/rate")
