@@ -28,7 +28,7 @@ open class RestController(
 //    @Async("restProcessorExecutor")
     @GetMapping("classic/{id}")
     open//    @GetMapping("/collectInfo")
-    fun collectInfo(@PathVariable id: Int): DataCollector {
+    fun collectInfo(@PathVariable id: String): DataCollector {
             val data = requestService1.getDataAsync(id.toString())
             val data1 = requestService2.getDataAsync(id.toString())
             DataCollector(data, data1)
