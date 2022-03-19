@@ -11,6 +11,7 @@
         <module>metrics-starter</module>
         <module>external-service</module>
         <module>external-service-second</module>
+        <module>my-load-test</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
