@@ -8,7 +8,6 @@ import io.gatling.http.Predef.http
 import io.gatling.http.protocol.HttpProtocolBuilder
 import ru.vood.http.load.testing.scenario.OneScenarioData
 import ru.vood.http.load.testing.scenario.ScenarioConst._
-import ru.vood.http.load.testing.scenario.SpringNio._
 
 import scala.concurrent.duration.DurationInt
 import scala.language.postfixOps
@@ -20,30 +19,31 @@ class HttpSimulation extends Simulation {
   private val notMyGetScenarioGetScenarioBuilder: ScenarioBuilder = scenario("notMyGetScenario").exec(notMyGetScenario)
   //    .exec(pause(10))
 
-  private val usersCnt = 130
+  private val usersCnt = 150
   private val seconds = 3
 
-  private val minute = 240
+  private val minute = 1800
 
   def runPoint(data: OneScenarioData, inj: OpenInjectionStep*): PopulationBuilder = data.scenarioBuilder.inject(inj).protocols(data.protocol)
 
 
-  /*setUp(
+  setUp(
     runPoint(classicRestScenarioData,
-      rampUsersPerSec(200).to(usersCnt).during(minute.minutes),
-      constantUsersPerSec(usersCnt) during (minute minutes)
-    ),
-
-    runPoint(webFluxScenarioData,
-      rampUsersPerSec(200).to(usersCnt).during(minute.minutes),
-      constantUsersPerSec(usersCnt) during (minute minutes)
-    ),
-
-    runPoint(coroutinesRestScenarioData,
-      rampUsersPerSec(200).to(usersCnt).during(minute.minutes),
-      constantUsersPerSec(usersCnt) during (minute minutes)
+      rampUsersPerSec(50).to(usersCnt).during(minute.seconds),
+      constantUsersPerSec(usersCnt) during (minute seconds)
+    ).andThen(
+      runPoint(webFluxScenarioData,
+        rampUsersPerSec(50).to(usersCnt).during(minute.seconds),
+        constantUsersPerSec(usersCnt) during (minute seconds)
+      ).andThen(
+        runPoint(coroutinesRestScenarioData,
+          rampUsersPerSec(50).to(usersCnt).during(minute.seconds),
+          constantUsersPerSec(usersCnt) during (minute seconds)
+        )
+      )
     )
-  )*/
+
+  )
 
   /* setUp(
      runPoint(classicRestScenarioData,
@@ -69,15 +69,15 @@ class HttpSimulation extends Simulation {
     val syncScenarioData= scenarioData("sync/data")
   */
 
-  setUp(
+  /*setUp(
     runPoint(callableScenarioData,
-      rampUsersPerSec(200).to(usersCnt).during(minute.seconds),
+      rampUsersPerSec(50).to(usersCnt).during(minute.seconds),
       constantUsersPerSec(usersCnt) during (minute seconds)
     ).andThen(
       runPoint(deferredScenarioData,
-        rampUsersPerSec(200).to(usersCnt).during(minute.seconds),
+        rampUsersPerSec(50).to(usersCnt).during(minute.seconds),
         constantUsersPerSec(usersCnt) during (minute seconds)
-      )))
+      )))*/
 
   /*setUp(
     runPoint(callableScenarioData,
