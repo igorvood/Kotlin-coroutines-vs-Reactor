@@ -19,26 +19,26 @@ class HttpSimulation extends Simulation {
   private val notMyGetScenarioGetScenarioBuilder: ScenarioBuilder = scenario("notMyGetScenario").exec(notMyGetScenario)
   //    .exec(pause(10))
 
-  private val usersCnt = 150
+  private val usersCnt = 200
   private val seconds = 3
 
-  private val minute = 1800
+  private val minute = 3800
 
   def runPoint(data: OneScenarioData, inj: OpenInjectionStep*): PopulationBuilder = data.scenarioBuilder.inject(inj).protocols(data.protocol)
 
 
   setUp(
     runPoint(classicRestScenarioData,
-      rampUsersPerSec(50).to(usersCnt).during(minute.seconds),
-      constantUsersPerSec(usersCnt) during (minute seconds)
+//      rampUsersPerSec(50).to(usersCnt).during(minute.seconds),
+      constantUsersPerSec(160) during (minute seconds)
     ).andThen(
       runPoint(webFluxScenarioData,
-        rampUsersPerSec(50).to(usersCnt).during(minute.seconds),
-        constantUsersPerSec(usersCnt) during (minute seconds)
+//        rampUsersPerSec(50).to(usersCnt).during(minute.seconds),
+        constantUsersPerSec(150) during (minute seconds)
       ).andThen(
         runPoint(coroutinesRestScenarioData,
-          rampUsersPerSec(50).to(usersCnt).during(minute.seconds),
-          constantUsersPerSec(usersCnt) during (minute seconds)
+//          rampUsersPerSec(50).to(usersCnt).during(minute.seconds),
+          constantUsersPerSec(150) during (minute seconds)
         )
       )
     )
