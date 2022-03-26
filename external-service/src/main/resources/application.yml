@@ -1,4 +1,4 @@
-delay: 1
+delay: 0
 management:
   endpoints:
     web:

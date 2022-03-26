@@ -23,7 +23,7 @@ open class ExternalSecondService {
             Thread.sleep(delayV)
         }
         val s = "$id ${ExternalSecondService::class.java}"
-        logger.info(s)
+//        logger.info(s)
         return OutValue(s)
     }
 
