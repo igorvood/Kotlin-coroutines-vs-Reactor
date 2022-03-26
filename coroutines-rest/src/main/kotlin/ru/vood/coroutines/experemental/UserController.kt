@@ -2,6 +2,7 @@ package ru.vood.coroutines.experemental
 
 import io.micrometer.core.instrument.MeterRegistry
 import org.springframework.http.MediaType
+import org.springframework.scheduling.annotation.Async
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
